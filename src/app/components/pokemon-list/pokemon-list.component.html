@@ -1,0 +1,70 @@
+<div class="list-container">
+
+  <div class="filters-container">
+    <app-search-bar class="search-bar" (searchChange)="onSearchChange($event)"></app-search-bar>
+    <select class="type-filter" (change)="onTypeChange($event)" [style.color]="selectedType ? getTypeColor(selectedType) : 'white'">
+      <option value="" style="color: white">Tüm Tipler</option>
+      <option *ngFor="let type of types" [value]="type.name" [style.color]="getTypeColor(type.name)">
+        {{ type.name | titlecase }}
+      </option>
+    </select>
+  </div>
+
+  <div class="stats-bar" *ngIf="!loading && pokemons.length">
+    <span class="stats-text" *ngIf="isSearchMode">
+      <span class="badge">{{ totalCount }}</span> sonuç bulundu
+      <span *ngIf="searchQuery || selectedType"> — 
+        <strong *ngIf="searchQuery">"{{ searchQuery }}"</strong>
+        <span *ngIf="searchQuery && selectedType"> ve </span>
+        <strong *ngIf="selectedType">{{ selectedType | titlecase }} tipi</strong>
+      </span>
+    </span>
+    <span class="stats-text" *ngIf="!isSearchMode">
+      {{ startIndex }}–{{ endIndex }} / {{ totalCount }} Pokémon
+    </span>
+    <span class="stats-page">Sayfa {{ currentPage }} / {{ totalPages }}</span>
+  </div>
+
+  <div class="empty-state" *ngIf="!loading && !error && pokemons.length === 0 && isSearchMode">
+    <div class="empty-icon">?</div>
+    <p class="empty-title">Pokémon bulunamadı</p>
+    <p class="empty-sub">
+      <span *ngIf="searchQuery">"{{ searchQuery }}" </span>
+      <span *ngIf="searchQuery && selectedType">ve </span>
+      <span *ngIf="selectedType">{{ selectedType | titlecase }} tipi </span>
+      ile eşleşen Pokémon yok
+    </p>
+  </div>
+
+  <div class="loading-state" *ngIf="loading">
+    <div class="pokeball">
+      <div class="pokeball-top"></div>
+      <div class="pokeball-middle"></div>
+      <div class="pokeball-bottom"></div>
+      <div class="pokeball-center"></div>
+    </div>
+    <p class="loading-text">{{ isSearchMode ? 'Aranıyor...' : 'Pokémon yükleniyor...' }}</p>
+  </div>
+
+  <div class="error-state" *ngIf="error && !loading">
+    <p>⚠️ {{ error }}</p>
+    <button (click)="loadPage(currentPage)">Tekrar Dene</button>
+  </div>
+
+  <div class="grid" *ngIf="!loading && !error && pokemons.length > 0">
+    <app-pokemon-card
+      *ngFor="let pokemon of pokemons"
+      [pokemon]="pokemon"
+    ></app-pokemon-card>
+  </div>
+
+  <app-pagination
+    *ngIf="!loading && totalPages > 1"
+    [currentPage]="currentPage"
+    [totalPages]="totalPages"
+    (pageChange)="onPageChange($event)"
+  ></app-pagination>
+
+</div>
+
+

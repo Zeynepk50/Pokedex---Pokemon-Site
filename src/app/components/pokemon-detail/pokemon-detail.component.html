@@ -1,0 +1,83 @@
+<div class="detail-container">
+  <!-- Back Button & Header -->
+  <div class="detail-header">
+    <button class="back-button" (click)="goBack()">← Geri Dön</button>
+    <h1 class="detail-title">Pokémon Detayları</h1>
+  </div>
+
+  <!-- Loading State -->
+  <div class="loading-state" *ngIf="loading">
+    <div class="pokeball">
+      <div class="pokeball-top"></div>
+      <div class="pokeball-middle"></div>
+      <div class="pokeball-bottom"></div>
+      <div class="pokeball-center"></div>
+    </div>
+    <p class="loading-text">Pokémon yükleniyor...</p>
+  </div>
+
+  <!-- Error State -->
+  <div class="error-state" *ngIf="error && !loading">
+    <p>⚠️ {{ error }}</p>
+    <button (click)="goBack()">Listeye Dön</button>
+  </div>
+
+  <!-- Detail Content -->
+  <div class="detail-content" *ngIf="pokemon && !loading && !error">
+    <div class="detail-card">
+      <!-- Image Section -->
+      <div class="image-section">
+        <div class="image-container">
+          <img [src]="imageUrl" [alt]="pokemon.name" class="pokemon-image" />
+        </div>
+        <p class="pokemon-id">{{ formattedId }}</p>
+      </div>
+
+      <!-- Info Section -->
+      <div class="info-section">
+        <h2 class="pokemon-name">{{ pokemon.name | uppercase }}</h2>
+
+        <!-- Types -->
+        <div class="types-section">
+          <span
+            *ngFor="let typeObj of pokemon.types"
+            class="type-badge"
+            [style.backgroundColor]="getTypeColor(typeObj.type.name)"
+          >
+            {{ typeObj.type.name | uppercase }}
+          </span>
+        </div>
+
+        <!-- Basic Info -->
+        <div class="basic-info">
+          <div class="info-item">
+            <span class="label">Boy:</span>
+            <span class="value">{{ (pokemon.height / 10).toFixed(1) }} m</span>
+          </div>
+          <div class="info-item">
+            <span class="label">Ağırlık:</span>
+            <span class="value">{{ (pokemon.weight / 10).toFixed(1) }} kg</span>
+          </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-section">
+          <h3 class="stats-title">İstatistikler</h3>
+          <div class="stats-grid">
+            <div *ngFor="let stat of pokemon.stats" class="stat-item">
+              <div class="stat-label">{{ stat.stat.name | uppercase }}</div>
+              <div class="stat-bar">
+                <div
+                  class="stat-fill"
+                  [style.width.%]="(stat.base_stat / 255) * 100"
+                  [style.backgroundColor]="getStatColor(stat.base_stat)"
+                ></div>
+              </div>
+              <div class="stat-value">{{ stat.base_stat }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
