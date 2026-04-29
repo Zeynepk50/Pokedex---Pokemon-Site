@@ -9,7 +9,7 @@
   align-items: center;
   gap: 8px;
   cursor: pointer;
-  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+  transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease, background-color 0.3s ease; // kart hover olduğundaki geçişler.
   position: relative;
   overflow: hidden;
 
@@ -46,7 +46,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  flex-shrink: 0; 
+  flex-shrink: 0;
 }
 
 .card-image {
@@ -88,21 +88,201 @@
 }
 
 // Type colors
-.type-normal    { background: rgba(168,168,120,0.2); color: #c8c89a; border: 1px solid rgba(168,168,120,0.3); }
-.type-fire      { background: rgba(240,128,48,0.2);  color: #f09060; border: 1px solid rgba(240,128,48,0.3); }
-.type-water     { background: rgba(104,144,240,0.2); color: #7090f0; border: 1px solid rgba(104,144,240,0.3); }
-.type-grass     { background: rgba(120,200,80,0.2);  color: #78c860; border: 1px solid rgba(120,200,80,0.3); }
-.type-electric  { background: rgba(248,208,48,0.2);  color: #f8d030; border: 1px solid rgba(248,208,48,0.3); }
-.type-ice       { background: rgba(152,216,216,0.2); color: #98d8d8; border: 1px solid rgba(152,216,216,0.3); }
-.type-fighting  { background: rgba(192,48,40,0.2);   color: #e05040; border: 1px solid rgba(192,48,40,0.3); }
-.type-poison    { background: rgba(160,64,160,0.2);  color: #c060c0; border: 1px solid rgba(160,64,160,0.3); }
-.type-ground    { background: rgba(224,192,104,0.2); color: #d4a85a; border: 1px solid rgba(224,192,104,0.3); }
-.type-flying    { background: rgba(168,144,240,0.2); color: #a890f0; border: 1px solid rgba(168,144,240,0.3); }
-.type-psychic   { background: rgba(248,88,136,0.2);  color: #f85888; border: 1px solid rgba(248,88,136,0.3); }
-.type-bug       { background: rgba(168,184,32,0.2);  color: #aab820; border: 1px solid rgba(168,184,32,0.3); }
-.type-rock      { background: rgba(184,160,56,0.2);  color: #b8a038; border: 1px solid rgba(184,160,56,0.3); }
-.type-ghost     { background: rgba(112,88,152,0.2);  color: #7058a0; border: 1px solid rgba(112,88,152,0.3); }
-.type-dragon    { background: rgba(112,56,248,0.2);  color: #9070f8; border: 1px solid rgba(112,56,248,0.3); }
-.type-dark      { background: rgba(112,88,72,0.2);   color: #907860; border: 1px solid rgba(112,88,72,0.3); }
-.type-steel     { background: rgba(184,184,208,0.2); color: #b8b8d0; border: 1px solid rgba(184,184,208,0.3); }
-.type-fairy     { background: rgba(238,153,172,0.2); color: #ee99ac; border: 1px solid rgba(238,153,172,0.3); }
+.type-normal {
+  background: rgba(168, 168, 120, 0.2);
+  color: #c8c89a;
+  border: 1px solid rgba(168, 168, 120, 0.3);
+}
+
+.type-fire {
+  background: rgba(240, 128, 48, 0.2);
+  color: #f09060;
+  border: 1px solid rgba(240, 128, 48, 0.3);
+}
+
+.type-water {
+  background: rgba(104, 144, 240, 0.2);
+  color: #7090f0;
+  border: 1px solid rgba(104, 144, 240, 0.3);
+}
+
+.type-grass {
+  background: rgba(120, 200, 80, 0.2);
+  color: #78c860;
+  border: 1px solid rgba(120, 200, 80, 0.3);
+}
+
+.type-electric {
+  background: rgba(248, 208, 48, 0.2);
+  color: #f8d030;
+  border: 1px solid rgba(248, 208, 48, 0.3);
+}
+
+.type-ice {
+  background: rgba(152, 216, 216, 0.2);
+  color: #98d8d8;
+  border: 1px solid rgba(152, 216, 216, 0.3);
+}
+
+.type-fighting {
+  background: rgba(192, 48, 40, 0.2);
+  color: #e05040;
+  border: 1px solid rgba(192, 48, 40, 0.3);
+}
+
+.type-poison {
+  background: rgba(160, 64, 160, 0.2);
+  color: #c060c0;
+  border: 1px solid rgba(160, 64, 160, 0.3);
+}
+
+.type-ground {
+  background: rgba(224, 192, 104, 0.2);
+  color: #d4a85a;
+  border: 1px solid rgba(224, 192, 104, 0.3);
+}
+
+.type-flying {
+  background: rgba(168, 144, 240, 0.2);
+  color: #a890f0;
+  border: 1px solid rgba(168, 144, 240, 0.3);
+}
+
+.type-psychic {
+  background: rgba(248, 88, 136, 0.2);
+  color: #f85888;
+  border: 1px solid rgba(248, 88, 136, 0.3);
+}
+
+.type-bug {
+  background: rgba(168, 184, 32, 0.2);
+  color: #aab820;
+  border: 1px solid rgba(168, 184, 32, 0.3);
+}
+
+.type-rock {
+  background: rgba(184, 160, 56, 0.2);
+  color: #b8a038;
+  border: 1px solid rgba(184, 160, 56, 0.3);
+}
+
+.type-ghost {
+  background: rgba(112, 88, 152, 0.2);
+  color: #7058a0;
+  border: 1px solid rgba(112, 88, 152, 0.3);
+}
+
+.type-dragon {
+  background: rgba(112, 56, 248, 0.2);
+  color: #9070f8;
+  border: 1px solid rgba(112, 56, 248, 0.3);
+}
+
+.type-dark {
+  background: rgba(112, 88, 72, 0.2);
+  color: #907860;
+  border: 1px solid rgba(112, 88, 72, 0.3);
+}
+
+.type-steel {
+  background: rgba(184, 184, 208, 0.2);
+  color: #b8b8d0;
+  border: 1px solid rgba(184, 184, 208, 0.3);
+}
+
+.type-fairy {
+  background: rgba(238, 153, 172, 0.2);
+  color: #ee99ac;
+  border: 1px solid rgba(238, 153, 172, 0.3);
+}
+
+// Hover states for cards based on primary type
+.card.hover-normal:hover {
+  background-color: rgba(168, 168, 120, 0.15);
+  border-color: rgba(168, 168, 120, 0.5);
+}
+
+.card.hover-fire:hover {
+  background-color: rgba(240, 128, 48, 0.15);
+  border-color: rgba(240, 128, 48, 0.5);
+}
+
+.card.hover-water:hover {
+  background-color: rgba(104, 144, 240, 0.15);
+  border-color: rgba(104, 144, 240, 0.5);
+}
+
+.card.hover-grass:hover {
+  background-color: rgba(120, 200, 80, 0.15);
+  border-color: rgba(120, 200, 80, 0.5);
+}
+
+.card.hover-electric:hover {
+  background-color: rgba(248, 208, 48, 0.15);
+  border-color: rgba(248, 208, 48, 0.5);
+}
+
+.card.hover-ice:hover {
+  background-color: rgba(152, 216, 216, 0.15);
+  border-color: rgba(152, 216, 216, 0.5);
+}
+
+.card.hover-fighting:hover {
+  background-color: rgba(192, 48, 40, 0.15);
+  border-color: rgba(192, 48, 40, 0.5);
+}
+
+.card.hover-poison:hover {
+  background-color: rgba(160, 64, 160, 0.15);
+  border-color: rgba(160, 64, 160, 0.5);
+}
+
+.card.hover-ground:hover {
+  background-color: rgba(224, 192, 104, 0.15);
+  border-color: rgba(224, 192, 104, 0.5);
+}
+
+.card.hover-flying:hover {
+  background-color: rgba(168, 144, 240, 0.15);
+  border-color: rgba(168, 144, 240, 0.5);
+}
+
+.card.hover-psychic:hover {
+  background-color: rgba(248, 88, 136, 0.15);
+  border-color: rgba(248, 88, 136, 0.5);
+}
+
+.card.hover-bug:hover {
+  background-color: rgba(168, 184, 32, 0.15);
+  border-color: rgba(168, 184, 32, 0.5);
+}
+
+.card.hover-rock:hover {
+  background-color: rgba(184, 160, 56, 0.15);
+  border-color: rgba(184, 160, 56, 0.5);
+}
+
+.card.hover-ghost:hover {
+  background-color: rgba(112, 88, 152, 0.15);
+  border-color: rgba(112, 88, 152, 0.5);
+}
+
+.card.hover-dragon:hover {
+  background-color: rgba(112, 56, 248, 0.15);
+  border-color: rgba(112, 56, 248, 0.5);
+}
+
+.card.hover-dark:hover {
+  background-color: rgba(112, 88, 72, 0.15);
+  border-color: rgba(112, 88, 72, 0.5);
+}
+
+.card.hover-steel:hover {
+  background-color: rgba(184, 184, 208, 0.15);
+  border-color: rgba(184, 184, 208, 0.5);
+}
+
+.card.hover-fairy:hover {
+  background-color: rgba(238, 153, 172, 0.15);
+  border-color: rgba(238, 153, 172, 0.5);
+}

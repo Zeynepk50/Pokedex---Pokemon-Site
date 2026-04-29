@@ -10,7 +10,7 @@ import { Pokemon } from '../../models/pokemon.model';
 export class PokemonCardComponent {
   @Input() pokemon!: Pokemon;
 
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
   get formattedId(): string {
     return `#${String(this.pokemon.id).padStart(3, '0')}`;
@@ -20,6 +20,12 @@ export class PokemonCardComponent {
     return this.pokemon.sprites.other['official-artwork'].front_default
       || this.pokemon.sprites.front_default
       || `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/other/official-artwork/${this.pokemon.id}.png`;
+  }
+
+  get primaryType(): string {  //hover geçişleri için 
+    return this.pokemon.types && this.pokemon.types.length > 0   //pokemonun tipini alıyor  
+      ? this.pokemon.types[0].type.name
+      : 'normal';
   }
 
   viewDetails(): void {

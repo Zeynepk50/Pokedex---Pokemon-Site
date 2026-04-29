@@ -2,8 +2,9 @@
 
   <div class="filters-container">
     <app-search-bar class="search-bar" (searchChange)="onSearchChange($event)"></app-search-bar>
-    <select class="type-filter" (change)="onTypeChange($event)" [style.color]="selectedType ? getTypeColor(selectedType) : 'white'">
-      <option value="" style="color: white">Tüm Tipler</option>
+    <select class="type-filter" (change)="onTypeChange($event)"
+      [style.color]="selectedType ? getTypeColor(selectedType) : 'white'">
+      <option value="" style="color: rgb(231, 215, 230)">Tüm Tipler</option>
       <option *ngFor="let type of types" [value]="type.name" [style.color]="getTypeColor(type.name)">
         {{ type.name | titlecase }}
       </option>
@@ -13,7 +14,7 @@
   <div class="stats-bar" *ngIf="!loading && pokemons.length">
     <span class="stats-text" *ngIf="isSearchMode">
       <span class="badge">{{ totalCount }}</span> sonuç bulundu
-      <span *ngIf="searchQuery || selectedType"> — 
+      <span *ngIf="searchQuery || selectedType"> —
         <strong *ngIf="searchQuery">"{{ searchQuery }}"</strong>
         <span *ngIf="searchQuery && selectedType"> ve </span>
         <strong *ngIf="selectedType">{{ selectedType | titlecase }} tipi</strong>
@@ -52,19 +53,10 @@
   </div>
 
   <div class="grid" *ngIf="!loading && !error && pokemons.length > 0">
-    <app-pokemon-card
-      *ngFor="let pokemon of pokemons"
-      [pokemon]="pokemon"
-    ></app-pokemon-card>
+    <app-pokemon-card *ngFor="let pokemon of pokemons" [pokemon]="pokemon"></app-pokemon-card>
   </div>
 
-  <app-pagination
-    *ngIf="!loading && totalPages > 1"
-    [currentPage]="currentPage"
-    [totalPages]="totalPages"
-    (pageChange)="onPageChange($event)"
-  ></app-pagination>
+  <app-pagination *ngIf="!loading && totalPages > 1" [currentPage]="currentPage" [totalPages]="totalPages"
+    (pageChange)="onPageChange($event)"></app-pagination>
 
 </div>
-
-

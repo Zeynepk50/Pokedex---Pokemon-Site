@@ -1,19 +1,10 @@
-<div class="card" (click)="viewDetails()" role="button" tabindex="0">
+<div class="card hover-{{ primaryType }}" (click)="viewDetails()" role="button" tabindex="0"> <!-- //hover geçişi -->
   <div class="card-id">{{ formattedId }}</div>
   <div class="card-image-wrap">
-    <img
-      class="card-image"
-      [src]="imageUrl"
-      [alt]="pokemon.name"
-      loading="lazy"
-    />
+    <img class="card-image" [src]="imageUrl" [alt]="pokemon.name" loading="lazy" />
   </div>
   <div class="card-name">{{ pokemon.name }}</div>
   <div class="card-types">
-    <span
-      *ngFor="let t of pokemon.types"
-      class="type-badge"
-      [ngClass]="'type-' + t.type.name"
-    >{{ t.type.name }}</span>
+    <span *ngFor="let t of pokemon.types" class="type-badge" [ngClass]="'type-' + t.type.name">{{ t.type.name }}</span>
   </div>
 </div>
