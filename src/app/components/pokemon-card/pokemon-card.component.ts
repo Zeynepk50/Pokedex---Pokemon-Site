@@ -11,6 +11,8 @@ import { FavoritesService } from '../../services/favorites.service';
 export class PokemonCardComponent {
   @Input() pokemon!: Pokemon;
 
+  isAnimating = false; //animasyon
+
   constructor(
     private router: Router,
     private favoritesService: FavoritesService
@@ -23,6 +25,12 @@ export class PokemonCardComponent {
   toggleFavorite(event: Event): void {
     event.stopPropagation(); // Don't trigger card click
     this.favoritesService.toggleFavorite(this.pokemon.id);
+
+    // Trigger animation
+    this.isAnimating = true;
+    setTimeout(() => {
+      this.isAnimating = false;
+    }, 450); // Match CSS animation duration
   }
 
   get formattedId(): string {
