@@ -90,21 +90,43 @@ export class PokemonService {
     );
   }
 
-  // Favorileri çek (sayfalı)
-  getFavoritesList(ids: number[], page: number): Observable<{ pokemons: Pokemon[]; total: number }> {
-    const total = ids.length;
-    const start = (page - 1) * this.PAGE_SIZE;
-    const pageIds = ids.slice(start, start + this.PAGE_SIZE);
-
-    if (pageIds.length === 0) {
-      return of({ pokemons: [] as Pokemon[], total });
+  // Favorileri filtreleyerek çek (sayfalı)
+  getFavoritesList(ids: number[], page: number, query: string = '', type: string = ''): Observable<{ pokemons: Pokemon[]; total: number }> {
+    if (ids.length === 0) {
+      return of({ pokemons: [] as Pokemon[], total: 0 });
     }
 
-    const detailRequests = pageIds.map((id) =>
-      this.http.get<Pokemon>(`${this.BASE_URL}/pokemon/${id}`)
-    );
-    return forkJoin(detailRequests).pipe(
-      map((pokemons) => ({ pokemons, total }))
+    let baseList$: Observable<PokemonBasic[]>;
+    if (type) {
+      baseList$ = this.http.get<{ pokemon: { pokemon: PokemonBasic }[] }>(`${this.BASE_URL}/type/${type}`)
+        .pipe(map(res => res.pokemon.map(p => p.pokemon)));
+    } else {
+      baseList$ = this.getAllPokemonNames();
+    }
+
+    return baseList$.pipe(
+      map(all => {
+        return all.filter(p => {
+          const id = this.extractId(p.url);
+          const matchesId = ids.includes(id);
+          const matchesQuery = p.name.toLowerCase().includes(query.toLowerCase().trim());
+          return matchesId && matchesQuery;
+        });
+      }),
+      switchMap(filtered => {
+        const total = filtered.length;
+        const start = (page - 1) * this.PAGE_SIZE;
+        const pageItems = filtered.slice(start, start + this.PAGE_SIZE);
+
+        if (pageItems.length === 0) {
+          return of({ pokemons: [] as Pokemon[], total });
+        }
+
+        const detailRequests = pageItems.map(p => this.http.get<Pokemon>(p.url));
+        return forkJoin(detailRequests).pipe(
+          map(pokemons => ({ pokemons, total }))
+        );
+      })
     );
   }
 

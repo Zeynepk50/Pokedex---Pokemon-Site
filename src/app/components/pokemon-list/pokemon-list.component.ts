@@ -58,7 +58,7 @@ export class PokemonListComponent implements OnInit {
 
     if (this.showFavorites) {
       const favIds = this.favoritesService.getFavorites();
-      this.pokemonService.getFavoritesList(favIds, page).subscribe({
+      this.pokemonService.getFavoritesList(favIds, page, this.searchQuery, this.selectedType).subscribe({
         next: ({ pokemons, total }) => {
           this.pokemons = pokemons;
           this.totalCount = total;

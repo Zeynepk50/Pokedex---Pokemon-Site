@@ -23,6 +23,12 @@
   <div class="stats-bar" *ngIf="!loading && (pokemons.length || showFavorites)">
     <span class="stats-text" *ngIf="showFavorites">
       <span class="badge">{{ totalCount }}</span> favori Pokémon
+      <span *ngIf="searchQuery || selectedType"> —
+        <strong *ngIf="searchQuery">"{{ searchQuery }}"</strong>
+        <span *ngIf="searchQuery && selectedType"> ve </span>
+        <strong *ngIf="selectedType">{{ selectedType | titlecase }} tipi</strong>
+        ile filtrelendi
+      </span>
     </span>
     <span class="stats-text" *ngIf="!showFavorites && isSearchMode">
       <span class="badge">{{ totalCount }}</span> sonuç bulundu
@@ -51,9 +57,15 @@
 
   <div class="empty-state" *ngIf="!loading && !error && pokemons.length === 0 && showFavorites">
     <div class="empty-icon">❤️</div>
-    <p class="empty-title">Henüz favori yok</p>
-    <p class="empty-sub">Beğendiğiniz Pokémonları favorilerinize ekleyerek burada görebilirsiniz.</p>
-    <button class="browse-btn" (click)="toggleFavoritesMode()">Pokémonlara Göz At</button>
+    <div *ngIf="!searchQuery && !selectedType">
+      <p class="empty-title">Henüz favori yok</p>
+      <p class="empty-sub">Beğendiğiniz Pokémonları favorilerinize ekleyerek burada görebilirsiniz.</p>
+      <button class="browse-btn" (click)="toggleFavoritesMode()">Pokémonlara Göz At</button>
+    </div>
+    <div *ngIf="searchQuery || selectedType">
+      <p class="empty-title">Filtreye uygun favori bulunamadı</p>
+      <p class="empty-sub">Favorileriniz arasında bu arama ile eşleşen Pokémon yok.</p>
+    </div>
   </div>
 
   <div class="loading-state" *ngIf="loading">
