@@ -29,8 +29,15 @@ export class PokemonListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTypes();
-    const savedPage = localStorage.getItem('currentPage'); // kaydettiğim sayfayı bulur
-    this.loadPage(savedPage ? parseInt(savedPage, 10) : 1);  // bulduğu sayfayı yükler
+
+    // Filtreleri yükle //filtreleri lokal storageden alıyor, filtrelediğim sayfada kalmasını sağlıyor.Bir pokemona bakıp çıktığımda tüm tiplere geri dönmüyor.
+    this.searchQuery = localStorage.getItem('searchQuery') || '';  //// local storage
+    this.selectedType = localStorage.getItem('selectedType') || '';
+    this.showFavorites = localStorage.getItem('showFavorites') === 'true';
+    this.isSearchMode = this.searchQuery.length > 0 || this.selectedType.length > 0;
+
+    const savedPage = localStorage.getItem('currentPage');
+    this.loadPage(savedPage ? parseInt(savedPage, 10) : 1);
   }
 
   loadTypes(): void {
@@ -94,11 +101,13 @@ export class PokemonListComponent implements OnInit {
 
   toggleFavoritesMode(): void {
     this.showFavorites = !this.showFavorites;
+    localStorage.setItem('showFavorites', this.showFavorites.toString());
     this.loadPage(1);
   }
 
   onSearchChange(query: string): void {
     this.searchQuery = query;
+    localStorage.setItem('searchQuery', query);
     this.isSearchMode = this.searchQuery.length > 0 || this.selectedType.length > 0;
     this.loadPage(1);
   }
@@ -106,6 +115,7 @@ export class PokemonListComponent implements OnInit {
   onTypeChange(event: Event): void {
     const select = event.target as HTMLSelectElement;
     this.selectedType = select.value;
+    localStorage.setItem('selectedType', this.selectedType);
     this.isSearchMode = this.searchQuery.length > 0 || this.selectedType.length > 0;
     this.loadPage(1);
   }

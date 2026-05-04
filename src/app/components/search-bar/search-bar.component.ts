@@ -1,4 +1,4 @@
-import { Component, Output, EventEmitter, OnDestroy } from '@angular/core';
+import { Component, Output, EventEmitter, OnDestroy, Input, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
@@ -7,10 +7,15 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   templateUrl: './search-bar.component.html',
   styleUrls: ['./search-bar.component.scss']
 })
-export class SearchBarComponent implements OnDestroy {
+export class SearchBarComponent implements OnInit, OnDestroy {
   @Output() searchChange = new EventEmitter<string>();
+  @Input() initialQuery = '';
 
   query = '';
+
+  ngOnInit(): void {
+    this.query = this.initialQuery;
+  }
   private input$ = new Subject<string>();
   private sub = this.input$
     .pipe(debounceTime(350), distinctUntilChanged())
