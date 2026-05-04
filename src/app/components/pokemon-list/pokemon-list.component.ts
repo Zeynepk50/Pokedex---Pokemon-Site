@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { PokemonService } from '../../services/pokemon.service';
 import { Pokemon } from '../../models/pokemon.model';
+import { FavoritesService } from '../../services/favorites.service';
+import { forkJoin, of } from 'rxjs';
 
 @Component({
   selector: 'app-pokemon-list',
@@ -18,8 +20,12 @@ export class PokemonListComponent implements OnInit {
   selectedType = '';
   types: { name: string, url: string }[] = [];
   isSearchMode = false;
+  showFavorites = false;
 
-  constructor(private pokemonService: PokemonService) { }
+  constructor(
+    private pokemonService: PokemonService,
+    private favoritesService: FavoritesService
+  ) { }
 
   ngOnInit(): void {
     this.loadTypes();
@@ -43,7 +49,21 @@ export class PokemonListComponent implements OnInit {
     localStorage.setItem('currentPage', page.toString());  //Hangi sayfada olduğumuz tutuluyor. Sayfa yenilenince geri gelmesi için
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
-    if (this.isSearchMode && (this.searchQuery || this.selectedType)) {
+    if (this.showFavorites) {
+      const favIds = this.favoritesService.getFavorites();
+      this.pokemonService.getFavoritesList(favIds, page).subscribe({
+        next: ({ pokemons, total }) => {
+          this.pokemons = pokemons;
+          this.totalCount = total;
+          this.totalPages = Math.ceil(total / this.pokemonService.PAGE_SIZE);
+          this.loading = false;
+        },
+        error: () => {
+          this.error = 'Favoriler yüklenirken hata oluştu.';
+          this.loading = false;
+        }
+      });
+    } else if (this.isSearchMode && (this.searchQuery || this.selectedType)) {
       this.pokemonService.searchPokemon(this.searchQuery, this.selectedType, page).subscribe({
         next: ({ pokemons, total }) => {
           this.pokemons = pokemons;
@@ -70,6 +90,11 @@ export class PokemonListComponent implements OnInit {
         }
       });
     }
+  }
+
+  toggleFavoritesMode(): void {
+    this.showFavorites = !this.showFavorites;
+    this.loadPage(1);
   }
 
   onSearchChange(query: string): void {

@@ -9,10 +9,19 @@
         {{ type.name | titlecase }}
       </option>
     </select>
+    <button class="fav-toggle-btn" [class.active]="showFavorites" (click)="toggleFavoritesMode()">
+      <svg viewBox="0 0 24 24" width="20" height="20">
+        <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+      </svg>
+      {{ showFavorites ? 'Tüm Pokémonlar' : 'Favorilerim' }}
+    </button>
   </div>
 
-  <div class="stats-bar" *ngIf="!loading && pokemons.length">
-    <span class="stats-text" *ngIf="isSearchMode">
+  <div class="stats-bar" *ngIf="!loading && (pokemons.length || showFavorites)">
+    <span class="stats-text" *ngIf="showFavorites">
+      <span class="badge">{{ totalCount }}</span> favori Pokémon
+    </span>
+    <span class="stats-text" *ngIf="!showFavorites && isSearchMode">
       <span class="badge">{{ totalCount }}</span> sonuç bulundu
       <span *ngIf="searchQuery || selectedType"> —
         <strong *ngIf="searchQuery">"{{ searchQuery }}"</strong>
@@ -20,10 +29,10 @@
         <strong *ngIf="selectedType">{{ selectedType | titlecase }} tipi</strong>
       </span>
     </span>
-    <span class="stats-text" *ngIf="!isSearchMode">
+    <span class="stats-text" *ngIf="!showFavorites && !isSearchMode">
       {{ startIndex }}–{{ endIndex }} / {{ totalCount }} Pokémon
     </span>
-    <span class="stats-page">Sayfa {{ currentPage }} / {{ totalPages }}</span>
+    <span class="stats-page" *ngIf="totalPages > 0">Sayfa {{ currentPage }} / {{ totalPages }}</span>
   </div>
 
   <div class="empty-state" *ngIf="!loading && !error && pokemons.length === 0 && isSearchMode">
@@ -35,6 +44,13 @@
       <span *ngIf="selectedType">{{ selectedType | titlecase }} tipi </span>
       ile eşleşen Pokémon yok
     </p>
+  </div>
+
+  <div class="empty-state" *ngIf="!loading && !error && pokemons.length === 0 && showFavorites">
+    <div class="empty-icon">❤️</div>
+    <p class="empty-title">Henüz favori yok</p>
+    <p class="empty-sub">Beğendiğiniz Pokémonları favorilerinize ekleyerek burada görebilirsiniz.</p>
+    <button class="browse-btn" (click)="toggleFavoritesMode()">Pokémonlara Göz At</button>
   </div>
 
   <div class="loading-state" *ngIf="loading">

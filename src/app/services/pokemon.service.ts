@@ -90,6 +90,24 @@ export class PokemonService {
     );
   }
 
+  // Favorileri çek (sayfalı)
+  getFavoritesList(ids: number[], page: number): Observable<{ pokemons: Pokemon[]; total: number }> {
+    const total = ids.length;
+    const start = (page - 1) * this.PAGE_SIZE;
+    const pageIds = ids.slice(start, start + this.PAGE_SIZE);
+
+    if (pageIds.length === 0) {
+      return of({ pokemons: [] as Pokemon[], total });
+    }
+
+    const detailRequests = pageIds.map((id) =>
+      this.http.get<Pokemon>(`${this.BASE_URL}/pokemon/${id}`)
+    );
+    return forkJoin(detailRequests).pipe(
+      map((pokemons) => ({ pokemons, total }))
+    );
+  }
+
   extractId(url: string): number {
     const parts = url.split('/').filter(Boolean);
     return parseInt(parts[parts.length - 1]);
