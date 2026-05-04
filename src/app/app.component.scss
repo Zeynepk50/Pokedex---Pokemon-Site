@@ -30,15 +30,52 @@
   height: 36px;
   border-radius: 50%;
   position: relative;
-  border: 2px solid rgba(255,255,255,0.2);
+  border: 2px solid rgba(255, 255, 255, 0.2);
   overflow: hidden;
   flex-shrink: 0;
 }
 
-.pb-top { position: absolute; top: 0; left: 0; right: 0; height: 50%; background: #e63946; }
-.pb-bot { position: absolute; bottom: 0; left: 0; right: 0; height: 50%; background: rgba(255,255,255,0.08); }
-.pb-mid { position: absolute; top: 50%; left: 0; right: 0; height: 2px; background: rgba(255,255,255,0.3); transform: translateY(-50%); z-index: 1; }
-.pb-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%); width: 10px; height: 10px; background: #0f0f23; border-radius: 50%; border: 2px solid rgba(255,255,255,0.3); z-index: 2; }
+.pb-top {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: #e63946;
+}
+
+.pb-bot {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.pb-mid {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translateY(-50%);
+  z-index: 1;
+}
+
+.pb-center {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  background: #0f0f23;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  z-index: 2;
+}
 
 .logo-title {
   display: block;
@@ -51,21 +88,33 @@
 .logo-sub {
   display: block;
   font-size: 11px;
-  color: rgba(255,255,255,0.4);
+  color: rgba(255, 255, 255, 0.4);
 }
 
 .main {
   flex: 1;
   padding: 2rem 0;
+
+  @media (max-width: 600px) {
+    // 600px ve altı ekranlarda ana içerik alanının dikey dolgusunu 1rem'e düşürüyoruz.
+    padding: 1rem 0;
+  }
 }
 
 .footer {
-  border-top: 1px solid rgba(255,255,255,0.06);
+  border-top: 1px solid rgba(255, 255, 255, 0.06);
   padding: 1.5rem;
   text-align: center;
   font-size: 12px;
-  color: rgba(255,255,255,0.25);
+  color: rgba(255, 255, 255, 0.25);
 
-  a { color: rgba(255,255,255,0.4); text-decoration: none; }
-  a:hover { color: #fff; }
+  a {
+    color: rgba(255, 255, 255, 0.4);
+    text-decoration: none;
+  }
+
+  a:hover {
+    //Footer içindeki linklere hover uyguluyoruz.
+    color: #fff;
+  }
 }

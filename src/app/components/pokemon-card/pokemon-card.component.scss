@@ -13,6 +13,13 @@
   position: relative;
   overflow: hidden;
 
+  @media (max-width: 600px) {
+    // 600px ve altı ekranlarda kart boyutunu küçültüyoruz. Mobil için
+    height: 190px;
+    padding: 16px 12px 12px;
+    gap: 6px;
+  }
+
   .fav-btn {
     position: absolute;
     top: 12px;
@@ -102,6 +109,11 @@
   font-family: 'Courier New', monospace;
   letter-spacing: 1px;
   align-self: flex-start;
+
+  @media (max-width: 600px) {
+    //Mobil için yazı boyutunu küçültüyoruz.
+    font-size: 10px;
+  }
 }
 
 .card-image-wrap {
@@ -111,6 +123,11 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
+
+  @media (max-width: 600px) {
+    width: 80px; //Mobil için resim boyutunu küçültüyoruz.
+    height: 80px;
+  }
 }
 
 .card-image {
@@ -123,6 +140,11 @@
   .card:hover & {
     transform: scale(1.08);
   }
+
+  @media (max-width: 600px) {
+    width: 80px;
+    height: 80px;
+  }
 }
 
 .card-name {
@@ -132,6 +154,10 @@
   text-align: center;
   text-transform: capitalize;
   letter-spacing: 0.3px;
+
+  @media (max-width: 600px) {
+    font-size: 12px; //Mobil için yazı boyutunu küçültüyoruz.
+  }
 }
 
 .card-types {

@@ -14,7 +14,7 @@
   border-bottom: 2px solid #e0e0e0;
 
   .back-button {
-    padding: 10px 20px;
+    padding: 10px 18px;
     background-color: #ff6b6b;
     color: white;
     border: none;
@@ -23,6 +23,8 @@
     font-size: 14px;
     font-weight: 600;
     transition: background-color 0.3s ease;
+    white-space: nowrap; // butonun text'inin aşağı kaymasını önlüyor
+    flex-shrink: 0; // butonun küçülmesini önlüyor
 
     &:hover {
       background-color: #ff5252;
@@ -30,9 +32,22 @@
   }
 
   .detail-title {
-    font-size: 28px;
-    color: #333;
+    font-size: 24px;
+    color: #e6d8d8; //Pokemon detayları yazısı için
     margin: 0;
+    flex: 1;
+    text-align: center;
+    margin-right: 20px; // Offset back button to center title
+
+    @media (max-width: 480px) {
+      //480px ve altı ekranlarda yazı boyutunu 18px'e düşürüyoruz.
+      font-size: 18px;
+    }
+  }
+
+  @media (max-width: 600px) {
+    gap: 10px;
+    justify-content: flex-start;
   }
 }
 
@@ -96,12 +111,14 @@
   color: #333;
   margin: 0 0 10px 0;
   text-transform: capitalize;
+  text-align: center;
 }
 
 .types-section {
   display: flex;
   gap: 10px;
   flex-wrap: wrap;
+  justify-content: center;
 
   .type-badge {
     padding: 8px 16px;
@@ -258,6 +275,7 @@
     0% {
       transform: rotate(0deg);
     }
+
     100% {
       transform: rotate(360deg);
     }
@@ -300,6 +318,7 @@
     opacity: 0;
     transform: translateY(10px);
   }
+
   to {
     opacity: 1;
     transform: translateY(0);
