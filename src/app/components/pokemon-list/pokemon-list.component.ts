@@ -23,7 +23,8 @@ export class PokemonListComponent implements OnInit {
 
   ngOnInit(): void {
     this.loadTypes();
-    this.loadPage(1);
+    const savedPage = localStorage.getItem('currentPage'); // kaydettiğim sayfayı bulur
+    this.loadPage(savedPage ? parseInt(savedPage, 10) : 1);  // bulduğu sayfayı yükler
   }
 
   loadTypes(): void {
@@ -39,6 +40,7 @@ export class PokemonListComponent implements OnInit {
     this.loading = true;
     this.error = '';
     this.currentPage = page;
+    localStorage.setItem('currentPage', page.toString());  //Hangi sayfada olduğumuz tutuluyor. Sayfa yenilenince geri gelmesi için
     window.scrollTo({ top: 0, behavior: 'smooth' });
 
     if (this.isSearchMode && (this.searchQuery || this.selectedType)) {
